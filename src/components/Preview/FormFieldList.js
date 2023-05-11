@@ -1,6 +1,6 @@
 import React from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-import FormFieldItem from './FormFieldItem';
+import FormFieldItem from '../Fields/FormFieldItem';
 import '../../styles/FormFieldList.css';
 
 const FormFieldList = ({ formFields, onAddField, onDragEnd }) => {
@@ -43,28 +43,27 @@ const FormFieldList = ({ formFields, onAddField, onDragEnd }) => {
       </div>
 
       <DragDropContext onDragEnd={handleDragEnd}>
-        <Droppable droppableId="formFields">
-          {(provided) => (
-            <div className="form-field-list" {...provided.droppableProps} ref={provided.innerRef}>
-              {formFields.map((field, index) => (
-                <Draggable key={field.id} draggableId={field.id} index={index}>
-                {(provided) => (
-                  <div
-                    
-                    ref={provided.innerRef}
-                    {...provided.draggableProps}
-                    {...provided.dragHandleProps}
-                  >
-                    <FormFieldItem field={field} />
-                  </div>
-                )}
-              </Draggable>
-            ))}
-            {provided.placeholder}
-          </div>
-        )}
-      </Droppable>
-    </DragDropContext>
+  <Droppable droppableId="formFields">
+    {(provided) => (
+      <div className="form-field-list" {...provided.droppableProps} ref={provided.innerRef}>
+        {formFields && formFields.map((field, index) => (
+          <Draggable key={field.id} draggableId={field.id} index={index}>
+            {(provided) => (
+              <div
+                ref={provided.innerRef}
+                {...provided.draggableProps}
+                {...provided.dragHandleProps}
+              >
+                <FormFieldItem field={field} />
+              </div>
+            )}
+          </Draggable>
+        ))}
+        {provided.placeholder}
+      </div>
+    )}
+  </Droppable>
+</DragDropContext>
   </div>
 );
 };

@@ -3,13 +3,15 @@ import { Provider } from 'react-redux';
 import FormBuilder from './components/FormBuilder';
 import store from './store';
 import './styles/global.css'
-import Navbar from './components/Navbar';
+import ErrorBoundary from './components/Errors/ErrorBoundary';
+
 
 const App = () => {
   return (
     <Provider store={store}>
-      <Navbar/>
+     <ErrorBoundary>
       <FormBuilder />
+      </ErrorBoundary>
     </Provider>
   );
 };

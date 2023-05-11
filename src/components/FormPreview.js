@@ -1,13 +1,14 @@
 import React from 'react';
-import FormFieldPreview from './Fields/FormFieldPreview';
-import CodeGenerator from './Code/CodeGenerator';
+import FormFieldPreview from './Preview/FormFieldPreview';
 import '../styles/FormPreview.css';
 
 const FormPreview = ({ formFields }) => {
-  const titleField = formFields.find(field => field.type === 'title');
-  const buttonField = formFields.find(field => field.type === 'button');
+  const titleField = Array.isArray(formFields) ? formFields.find(field => field.type === 'title') : null;
+  const buttonField = Array.isArray(formFields) ? formFields.find(field => field.type === 'button') : null;
 
-  const otherFields = formFields.filter(field => field.type !== 'title' && field.type !== 'button');
+  const otherFields = Array.isArray(formFields)
+    ? formFields.filter(field => field.type !== 'title' && field.type !== 'button')
+    : [];
 
   return (
     <div className="form-preview">
@@ -20,7 +21,7 @@ const FormPreview = ({ formFields }) => {
         )}
 
         <div className="form-row">
-          {otherFields.map(field => (
+          {otherFields.length > 0 && otherFields.map(field => (
             <div className="form-group col-md-6" key={field.id}>
               <FormFieldPreview field={field} />
             </div>
@@ -28,13 +29,12 @@ const FormPreview = ({ formFields }) => {
         </div>
 
         {buttonField && (
-  <div className="form-button">
-    <button>
-      <FormFieldPreview field={buttonField} />
-    </button>
-  </div>
-)}
-
+          <div className="form-button">
+            <button>
+              <FormFieldPreview field={buttonField} />
+            </button>
+          </div>
+        )}
       </form>
     </div>
   );

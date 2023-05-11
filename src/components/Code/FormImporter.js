@@ -5,6 +5,10 @@ const FormImporter = ({ onImport }) => {
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
+    if (file.type !== 'application/json') {
+      console.error('File type is not JSON');
+      return;
+    }
     const reader = new FileReader();
 
     reader.onload = (e) => {

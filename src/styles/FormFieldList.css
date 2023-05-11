@@ -19,8 +19,8 @@
 }
 
 .btn {
-  background-color: #ffcc00;
-  color: #fff;
+  background-color: #ffb300;
+  color: #090909;
   padding: 8px 16px;
   border: none;
   border-radius: 4px;
@@ -32,10 +32,11 @@
   transform: translateZ(0);
   display: flex;
   align-items: center;
+  font-size: medium;
 }
 
 .btn:hover {
-  background-color: #ffcc00;
+  background-color: #ffc800;
   transform: translateY(-2px) translateZ(0);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
@@ -46,7 +47,7 @@
 }
 
 .btn-primary {
-  background-color: #ffcc00;
+  background-color: #00d0ffa5;
 }
 
 .btn-primary:hover {
@@ -63,7 +64,7 @@
 }
 
 .form-field-item {
-  background-color: #fff;
+  background-color: #d0cccc90;
   margin-bottom: 10px;
   border: 1px solid #ccc;
 }

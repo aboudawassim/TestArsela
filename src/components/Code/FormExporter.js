@@ -1,20 +1,18 @@
 import React from 'react';
+import { saveAs } from 'file-saver';
 
 const downloadJson = (data, filename) => {
   const jsonData = JSON.stringify(data, null, 2);
   const blob = new Blob([jsonData], { type: 'application/json' });
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement('a');
-  link.href = url;
-  link.download = filename;
-  link.click();
-  URL.revokeObjectURL(url);
+  saveAs(blob, filename);
 };
 
-const FormExporter = ({ formFields, titleField }) => {
+const FormExporter = ({ formFields }) => {
   const handleExportJson = () => {
-    const dataWithTitle = { title: titleField, formFields };
-    downloadJson(dataWithTitle, 'formFields.json');
+    const filename = prompt('Please enter the filename for the exported JSON:');
+    if (filename) {
+      downloadJson(formFields, filename);
+    }
   };
 
   return (

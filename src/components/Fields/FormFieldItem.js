@@ -8,18 +8,25 @@ const FormFieldItem = ({ field, updateFormField, deleteFormField, addFormPreview
   const [isIdOpen, setIsIdOpen] = useState(true);
   const [isClassOpen, setIsClassOpen] = useState(true);
   const [isPlaceholderOpen, setIsPlaceholderOpen] = useState(true);
-  const [isOpenRequired, setIsOpenRequired] = useState(false);
-  const [isOpenChecked, setIsOpenChecked] = useState(false);
-  const [isOpenOption, setIsOpenOption] = useState(false);
+  const [isRequiredOpen, setIsRequiredOpen] = useState(false);
+  const [isCheckedOpen, setIsCheckedOpen] = useState(false);
+  const [isOptionOpen, setIsOptionOpen] = useState(false);
+  const [newOption, setNewOption] = useState('');
+
+  
 
   const handleInputChange = (e) => {
     const { name, value, checked } = e.target;
     if (name === 'required' && !checked) {
       updateFormField(field.id, { required: false, requiredText: '' });
+    } else if (name === 'newOption') {
+      setNewOption(value);
     } else {
       updateFormField(field.id, { [name]: name === 'checked' ? checked : value });
     }
   };
+  
+  
   
 
   const handleDeleteField = () => {
@@ -41,10 +48,18 @@ const FormFieldItem = ({ field, updateFormField, deleteFormField, addFormPreview
   };
   
   const handleAddOption = () => {
-    const updatedOptions = [...field.options, ''];
-    updateFormField(field.id, { options: updatedOptions });
+    if (field.options) {
+      const updatedOptions = [...field.options, newOption];
+      updateFormField(field.id, { options: updatedOptions });
+    } else {
+      const updatedOptions = [newOption];
+      updateFormField(field.id, { options: updatedOptions });
+    }
+    setNewOption('');
   };
+  
 
+  
   const toggleName = () => {
     setIsNameOpen(!isNameOpen);
   };
@@ -61,30 +76,18 @@ const FormFieldItem = ({ field, updateFormField, deleteFormField, addFormPreview
     setIsPlaceholderOpen(!isPlaceholderOpen);
   };
 
-  const toggleOpenRequired = () => {
-    setIsOpenRequired(true);
+  const toggleRequired = () => {
+    setIsRequiredOpen(!isRequiredOpen);
   };
 
-  const toggleCloseRequired = () => {
-    setIsOpenRequired(false);
+  const toggleChecked = () => {
+    setIsCheckedOpen(!isCheckedOpen);
   };
 
-  const toggleOpenChecked = () => {
-    setIsOpenChecked(true);
+  const toggleOption = () => {
+    setIsOptionOpen(!isOptionOpen);
   };
-  
-  const toggleCloseChecked = () => {
-    setIsOpenChecked(false);
-  };
-  
-  const toggleOpenOption = () => {
-    setIsOpenOption(true);
-  };
-  
-  const toggleCloseOption = () => {
-    setIsOpenOption(false);
-  };
-  
+
 
   return (
     <div className="form-field-item">
@@ -102,35 +105,15 @@ const FormFieldItem = ({ field, updateFormField, deleteFormField, addFormPreview
         {isPlaceholderOpen ? 'Close Placeholder' : 'Open Placeholder'}
       </button>
 
-      {!isOpenRequired ? (
-        <button className="close-button" onClick={toggleOpenRequired}>
-          Open Required
-        </button>
-      ) : (
-        <button className="close-button" onClick={toggleCloseRequired}>
-          Close Required
-        </button>
-      )}
-
-{!isOpenChecked ? (
-        <button className="close-button" onClick={toggleOpenChecked}>
-          Open Checked
-        </button>
-      ) : (
-        <button className="close-button" onClick={toggleCloseChecked}>
-          Close Checked
-        </button>
-      )}
-
-{!isOpenOption ? (
-        <button className="close-button" onClick={toggleOpenOption}>
-          Open Option
-        </button>
-      ) : (
-        <button className="close-button" onClick={toggleCloseOption}>
-          Close Option
-        </button>
-      )}
+     <button className="close-button" onClick={toggleRequired}>
+      {isRequiredOpen ? 'Close Required' : 'Open Required'}
+     </button>
+     <button className="close-button" onClick={toggleChecked}>
+      {isCheckedOpen ? 'Close Checked' : 'Open Checked'}
+     </button>
+     <button className="close-button" onClick={toggleOption}>
+      {isOptionOpen ? 'Close Option' : 'Open Option'}
+     </button>
 
       {isNameOpen && (
         <label>
@@ -171,7 +154,7 @@ const FormFieldItem = ({ field, updateFormField, deleteFormField, addFormPreview
         </label>
       )}
 
-      {isOpenRequired && (
+      {isRequiredOpen && (
         <>
           <label>
             Required:
@@ -193,18 +176,11 @@ const FormFieldItem = ({ field, updateFormField, deleteFormField, addFormPreview
               />
             </label>
           )}
-       
-       {!isOpenChecked ? (
-  <button className="close-button" onClick={toggleOpenChecked}>
-    Open Checked
-  </button>
-) : (
-  <button className="close-button" onClick={toggleCloseChecked}>
-    Close Checked
-  </button>
-)}
+          </>
+       )}
+      
 
-{isOpenChecked && (
+{isCheckedOpen && (
   <label>
     <span>Checked:</span>
     <input
@@ -216,17 +192,9 @@ const FormFieldItem = ({ field, updateFormField, deleteFormField, addFormPreview
   </label>
 )}
 
-{!isOpenOption ? (
-  <button className="close-button" onClick={toggleOpenOption}>
-    Open Option
-  </button>
-) : (
-  <button className="close-button" onClick={toggleCloseOption}>
-    Close Option
-  </button>
-)}
 
-{isOpenOption && (
+
+{isOptionOpen && (
   <>
     <label>
       Options:
@@ -238,20 +206,27 @@ const FormFieldItem = ({ field, updateFormField, deleteFormField, addFormPreview
             value={option}
             onChange={handleOptionChange(index)}
           />
-          <button onClick={() => handleRemoveOption(index)}>Remove</button>
+          <button className="remove-option-button" onClick={() => handleRemoveOption(index)}>Remove</button>
         </div>
       ))}
-      <button onClick={handleAddOption}>Add Option</button>
+      <button className="add-option-button" onClick={handleAddOption}>Add Option</button>
+      <input
+        type="text"
+        name="newOption"
+        value={newOption}
+        onChange={handleInputChange}
+        placeholder="New Option"
+      />
     </label>
+    <select>
+      {field.options && field.options.map((option, index) => (
+        <option key={index} value={option}>
+          {option}
+        </option>
+      ))}
+    </select>
   </>
 )}
-
-  
-
-
-
-           </>
-      )}
 
       {/* Add additional input fields for other properties of the field */}
 

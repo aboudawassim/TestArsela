@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { addFormField, reorderFormFields, importFormFields } from '../actions/formActions';
 import FormPreview from './FormPreview';
-import FormFieldList from '././Fields/FormFieldList';
+import FormFieldList from './Preview/FormFieldList';
 import CodeGenerator from './Code/CodeGenerator';
 import FormExporter from './Code/FormExporter';
 import FormImporter from './Code/FormImporter';
 import '../styles/FormBuilder.css';
+
 
 const FormBuilder = ({ formFields, addFormField, reorderFormFields, importFormFields }) => {
   const [importedFormFields, setImportedFormFields] = useState([]);

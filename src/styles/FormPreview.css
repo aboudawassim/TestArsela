@@ -16,11 +16,12 @@
   align-items: center;
   height: 60px;
   font-size: 1rem;
+  color: #e03ad2;
 
 }
 
 .form-title h3 {
-  color: #87287f;
+  color: #000000;
   font-weight: bold;
   text-shadow: 2px 2px 4px rgba(113, 36, 87, 0.1);
   font-size: 1rem;
@@ -83,7 +84,7 @@
 }
 
 .form-preview button {
-  background-color: rgb(2, 216, 249);
+  background-color: rgb(249, 138, 2);
   color: #fff;
   border: none;
   border-radius: 4px;

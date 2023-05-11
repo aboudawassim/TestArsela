@@ -72,6 +72,21 @@
   margin-right: 5px;
 }
 
+/* ... */
+
+.form-field-item button.add-option-button {
+  background-color: #28a745;
+  margin-top: 10px;
+  color: #fff;
+}
+
+.form-field-item button.remove-option-button {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+/* ... */
+
 /* Responsive Styles */
 
 @media (max-width: 768px) {
